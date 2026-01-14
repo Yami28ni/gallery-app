@@ -1,0 +1,62 @@
+<%= render "shared/header" %>
+<div class="flex justify-between items-center mb-6 p-4 mt-20 border-b">
+  <h1 class="font-semibold text-4xl"><%= @album.title %></h1>
+
+  <%= link_to "Upload Image",
+        new_album_photo_path(@album),
+        class: "bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded shadow-sm text-sm font-medium" %>
+</div>
+
+<!-- Images Grid -->
+<% if @photos.any? %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+   <% @photos.each do |photo| %>
+  <% if photo.images.attached? %>
+    
+      <% photo.images.each do |image| %>
+        <div class="relative w-78 h-78 border border-blue-300 rounded overflow-hidden">
+
+          <%= image_tag image,
+                class: "h-full w-full object-cover rounded preview-image",data: { image_url: url_for(image) }  %>
+
+          <%= link_to destroy_image_album_photo_path(photo.album, photo, image_id: image.id),
+              data: { turbo_method: :delete, turbo_confirm: "Delete this image?" },
+              class: "absolute top-2 right-2 bg-black/60 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600" do %>
+            ✕
+          <% end %>
+
+        </div>
+      <% end %>
+  
+  <% end %>
+<% end %>
+
+  </div>
+<% else %>
+  
+  <div class="text-center py-20 text-gray-500">
+    <p>No images uploaded yet.</p>
+    <p class="text-sm">Click “Upload Image” to add your first photo.</p>
+  </div>
+<% end %>
+
+<!-- Image Preview Modal -->
+<div
+  id="image-modal"
+  class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50"
+>
+  <!-- Close button -->
+  <button
+    id="close-modal"
+    class="absolute top-4 right-6 text-white text-4xl font-bold hover:text-red-400"
+  >
+    &times;
+  </button>
+
+  <!-- Image -->
+  <img
+    id="modal-image"
+    src=""
+    class="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-xl"
+  />
+</div>
