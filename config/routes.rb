@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root "albums#index"
+
   devise_for :users
   resources :albums do
     resources :photos, only: [:index, :new, :create] do 

@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_album, only: [:show, :update, :edit]
+  before_action :set_album, only: [:show, :update, :edit, :destroy]
 
   def index
     #@albums=current_user.albums
@@ -9,8 +9,7 @@ class AlbumsController < ApplicationController
   end
 
   def new
-    @album=current_user.albums.new
-    @album.tags.build
+    @album = current_user.albums.new
   end
 
   def show
@@ -18,29 +17,28 @@ class AlbumsController < ApplicationController
 
   def update
     if @album.update(album_params)
-      redirect_to albums_path, notice:"Album updated successfully"
+      @album.tags = @album.tags
+      redirect_to albums_path, notice: "Album updated successfully"
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def create
-    @album=current_user.albums.new(album_params)
+    @album = current_user.albums.new(album_params)
 
     if @album.save
-      redirect_to albums_path, notice:"Album created successfully"
+      @album.tags = @album.tags 
+      redirect_to albums_path, notice: "Album created successfully"
     else
-      render :new, status: :unprocessable_entity 
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @tags  = @album.tags
   end
 
-
   def destroy
-    @album=current_user.albums.find(params[:id])
     if @album.destroy
       redirect_to albums_path, notice:"Album deleted successfully"
     end
@@ -49,11 +47,10 @@ class AlbumsController < ApplicationController
   private
 
   def set_album
-    @album=current_user.albums.find(params[:id])
+    @album = current_user.albums.find(params[:id])
   end
 
   def album_params
-    params.require(:album).permit(:title,:description,tags_attributes: [:id, :name, :_destroy])
+    params.require(:album).permit(:title, :description, tags_attributes: [:id, :name, :_destroy])
   end
 end
-

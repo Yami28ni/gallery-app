@@ -1,17 +1,16 @@
-
 <nav class="fixed top-0 left-0 z-40 w-full h-16 bg-white border-b border-default shadow-md">
   <div class="flex items-center justify-between h-full px-6">
 
     <!-- LEFT side -->
     <div class="flex items-center gap-4">
-      <!-- Hamburger (mobile only) -->
+       
       <button
         id="sidebar-toggle"
         class="md:hidden text-2xl text-indigo-600 focus:outline-none">
         <i class="fa-solid fa-bars"></i>
       </button>
 
-      <!-- Logo (mobile only) -->
+      <!-- Logo -->
       <%= link_to root_path, class: "md:hidden flex items-center gap-2" do %>
         <i class="fa-solid fa-images text-blue-500 text-2xl"></i>
         <span class="text-xl font-bold text-blue-900 whitespace-nowrap">
@@ -52,7 +51,7 @@
       <i class="fa-solid fa-xmark"></i>
     </button>
   </div>   
-<!-- content ABOVE overlay -->
+
   <div class="relative z-10 h-full px-4 py-4 overflow-y-auto border-e border-blue-700">
     <%= link_to root_path, class: "flex items-center ps-2.5 mb-5 gap-2" do %>
       <i class="fa-solid fa-images text-blue-500 text-2xl"></i>

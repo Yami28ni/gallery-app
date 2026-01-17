@@ -1,31 +1,29 @@
 <%= render "shared/navSidebar" %>
 <div class="border-b">
   <div class="flex flex-col md:flex-row md:items-center md:justify-between px-4 ">
+      <h1 class="font-semibold text-4xl py-4 sm:ml-64">
+        Dashboard
+      </h1>
 
-    <!-- Dashboard -->
-    <h1 class="font-semibold text-4xl py-4 sm:ml-64">
-      Dashboard
-    </h1>
-
-    <!-- Search -->
-    <div class="w-full mt-2 sm:mt-0 sm:ml-auto sm:mr-6 sm:w-96">
-      <%= form_with url: albums_path, method: :get, local: true do %>
-        <div class="flex gap-2">
-          <%= text_field_tag :query,
-            nil,
-            placeholder: "Search",
-            autocomplete: "off",
-            class: "w-full px-4 py-2 rounded-lg
+      <!-- Search -->
+      <div class="w-full mt-2 sm:mt-0 sm:ml-auto sm:mr-6 sm:w-96">
+        <%= form_with url: albums_path, method: :get, local: true do %>
+          <div class="flex gap-2">
+            <%= text_field_tag :query,
+              nil,
+              placeholder: "Search",
+              autocomplete: "off",
+              class: "w-full px-4 py-2 rounded-lg
                    bg-white/10 placeholder-gray-400
                    border border-white/10
                    focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
 
-          <%= submit_tag "Search",
-            class: "px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium
+            <%= submit_tag "Search",
+              class: "px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium
                    hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
-        </div>
-      <% end %>
-    </div>
+          </div>
+        <% end %>
+      </div>
 
   </div>
 </div>
@@ -39,13 +37,13 @@
       <div class="absolute top-3 right-3">
         <button
           type="button"
-          class="album-menu-btn w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200"
+          class="album-menu-btn w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 border border-gray-200"
         >
           <!-- three dots icon -->
           <svg class="w-5 h-5 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
-            <circle cx="5" cy="12" r="2" />
-            <circle cx="12" cy="12" r="2" />
-            <circle cx="19" cy="12" r="2" />
+            <circle cy="5" cx="12" r="2" />
+            <circle cy="12" cx="12" r="2" />
+            <circle cy="19" cx="12" r="2" />
           </svg>
         </button>
 
@@ -82,11 +80,9 @@
       <% end %>
       
       <!-- Album Title -->
-      <%= link_to album_path(album) do %>
         <h5 class="mt-6 mb-2 text-2xl text-blue-900 font-semibold tracking-tight text-heading">
           <%= album.title %>
         </h5>
-      <% end %>
 
       <!-- Album Description -->
       <p class="mb-6 text-body text-blue-900">
@@ -115,9 +111,6 @@
                 d="M19 12H5m14 0-4 4m4-4-4-4" />
         </svg>
       <% end %>
-      
-
-      
     </div>
   <% end %>
  </div>

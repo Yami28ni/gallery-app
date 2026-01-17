@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_08_081243) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_16_132448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -51,6 +51,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_081243) do
     t.index ["user_id"], name: "index_albums_on_user_id"
   end
 
+  create_table "albums_tags", id: false, force: :cascade do |t|
+    t.bigint "album_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["album_id", "tag_id"], name: "index_albums_tags_on_album_id_and_tag_id", unique: true
+    t.index ["album_id"], name: "index_albums_tags_on_album_id"
+    t.index ["tag_id"], name: "index_albums_tags_on_tag_id"
+  end
+
   create_table "photos", force: :cascade do |t|
     t.bigint "album_id", null: false
     t.datetime "created_at", null: false
@@ -60,11 +68,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_081243) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.bigint "album_id", null: false
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
-    t.index ["album_id"], name: "index_tags_on_album_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -83,6 +89,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_081243) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "albums", "users"
+  add_foreign_key "albums_tags", "albums"
+  add_foreign_key "albums_tags", "tags"
   add_foreign_key "photos", "albums"
-  add_foreign_key "tags", "albums"
 end

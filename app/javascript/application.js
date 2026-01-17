@@ -4,8 +4,7 @@ import "sidebar"
 import "dropdown"
 document.addEventListener("turbo:load", () => {
 
-  //Tags logic (new + existing)
-      
+  //Tags logic (new + existing) 
   const input = document.getElementById("tag-input");
   const tagList = document.getElementById("tag-list");
   const hiddenTags = document.getElementById("hidden-tags");
@@ -62,18 +61,17 @@ document.addEventListener("turbo:load", () => {
 });
 
 
-   //Existing tag delete (DB)
-  
-window.removeExistingTag = function (index) {
-  // remove visible chip
+  //Existing tag delete
+  window.removeExistingTag = function (index) {
   document.querySelector(`[data-index="${index}"]`)?.remove();
 
-  // mark for destroy (Rails reads this)
+
   const destroyInput = document.getElementById(`destroy-tag-${index}`);
   if (destroyInput) {
     destroyInput.value = "1";
   }
 };
+
 document.addEventListener("turbo:load", () => {
   const modal = document.getElementById("image-modal");
   const modalImage = document.getElementById("modal-image");

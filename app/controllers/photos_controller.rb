@@ -3,8 +3,7 @@ class PhotosController < ApplicationController
   before_action :set_album
  
   def index
-    @photos=@album.photos
-    @photo = @album.photos.build
+    @photos = @album.photos
   end
 
   def new
@@ -22,12 +21,11 @@ class PhotosController < ApplicationController
   end
   
   def destroy_image
-    album=current_user.albums.find(params[:album_id])
-    photo=album.photos.find(params[:id])
+    photo=@album.photos.find(params[:id])
     image=photo.images.find(params[:image_id])
     image.purge
 
-    redirect_back fallback_location: album_photos_path(album)
+    redirect_back fallback_location: album_photos_path(@album)
   end
 
   private
