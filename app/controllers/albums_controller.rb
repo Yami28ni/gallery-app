@@ -3,7 +3,6 @@ class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :update, :edit, :destroy]
 
   def index
-    #@albums=current_user.albums
     @query = params[:query]
     @albums = current_user.albums.search(@query)
   end
@@ -17,7 +16,6 @@ class AlbumsController < ApplicationController
 
   def update
     if @album.update(album_params)
-      @album.tags = @album.tags
       redirect_to albums_path, notice: "Album updated successfully"
     else
       render :edit, status: :unprocessable_entity
@@ -25,10 +23,8 @@ class AlbumsController < ApplicationController
   end
 
   def create
-    @album = current_user.albums.new(album_params)
-
+    @album = current_user.albums.new(album_params)    
     if @album.save
-      @album.tags = @album.tags 
       redirect_to albums_path, notice: "Album created successfully"
     else
       render :new, status: :unprocessable_entity
@@ -54,3 +50,5 @@ class AlbumsController < ApplicationController
     params.require(:album).permit(:title, :description, tags_attributes: [:id, :name, :_destroy])
   end
 end
+
+
